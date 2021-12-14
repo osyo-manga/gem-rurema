@@ -1,0 +1,3 @@
+class ArgumentError
+
+end

@@ -1,0 +1,3 @@
+class Gem::SystemExitException
+
+end

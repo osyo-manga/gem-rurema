@@ -1,0 +1,817 @@
+class ARGF.class
+  # --- argv -> Array
+  # 
+  # [[m:Object::ARGV]] を返します。
+  # 
+  # ARGF が ARGV をどう扱うかについては [[c:ARGF]] を参照してください。
+  # 
+  # 例:
+  # 
+  #   $ ruby argf.rb -v glark.txt
+  # 
+  #   ARGF.argv   #=> ["-v", "glark.txt"]
+  def argv; end
+
+  # --- binmode -> self
+  # 
+  # self をバイナリモードにします。一度バイナリモードになった後は非バイナリ
+  # モードに戻る事はできません。
+  # 
+  # バイナリモード下では以下のように動作します。
+  # 
+  #  * 改行の変換を停止する
+  #  * 文字エンコーディングの変換を停止する
+  #  * 内容を ASCII-8BIT として扱う
+  # 
+  # 例:
+  #   # test1.png - 164B
+  #   # test2.png - 128B
+  #   # test1.png + test2.png = 292B
+  # 
+  #   # $ ruby test.rb test1.png test2.png
+  # 
+  #   ARGF.binmode
+  #   ARGF.read.size  # => 292
+  # 
+  # 例:
+  #   # test1.png - 164B
+  #   # test2.png - 128B
+  #   # test1.png + test2.png = 292B
+  # 
+  #   # $ ruby test.rb test1.png test2.png
+  # 
+  #   ARGF.read.size  # => 290
+  # 
+  # @see [[m:IO#binmode]], [[m:ARGF.class#binmode?]]
+  def binmode; end
+
+  # --- binmode? -> bool
+  # 
+  # ARGF の入力ストリームがバイナリモードなら true を返します。
+  # そうでない場合、false を返します。
+  # 
+  # バイナリモードにするためには [[m:ARGF.class#binmode]] を使用します。
+  # 
+  #   ARGF.binmode? # => false
+  #   ARGF.binmode
+  #   ARGF.binmode? # => true
+  # 
+  # @see [[m:IO#binmode?]], [[m:ARGF.class#binmode]]
+  def binmode?; end
+
+  # --- close -> self
+  # 
+  # 現在開いている処理対象のファイルをクローズします。開くファイルが残って
+  # いる場合は次のファイルをオープンします。
+  # ただし、標準入力はクローズされません。
+  # 
+  #   $ echo "foo" > foo
+  #   $ echo "bar" > bar
+  # 
+  #   $ ruby argf.rb foo bar
+  # 
+  #   ARGF.filename  # => "foo"
+  #   ARGF.close
+  #   ARGF.filename  # => "bar"
+  #   ARGF.close
+  # 
+  # @see [[m:ARGF.class#closed?]]
+  def close; end
+
+  # --- closed? -> bool
+  # 
+  # 現在開いている処理対象のファイルがARGFがcloseされていればtrueを返します。
+  # 
+  # 例:
+  #   # $ echo "foo" > foo
+  #   # $ echo "bar" > bar
+  #   # $ ruby argf.rb foo bar
+  # 
+  #   ARGF.filename  # => "foo"
+  #   ARGF.close
+  #   # 複数のファイルを開いているので1度のARGF.closeではまた全てのファイルを閉じていないのでfalseになる
+  #   ARGF.closed?   # => false
+  #   ARGF.filename  # => "bar"
+  #   ARGF.close
+  #   # 2つのファイルを開いていたので2度目のARGF.closeで全てのファイルを閉じたためtrueになる
+  #   ARGF.closed?   # => true
+  # 
+  # @see [[m:IO#closed?]], [[m:ARGF.class#close]]
+  def closed?; end
+
+  # --- each(rs = $/) { |line| ... }             -> self
+  # --- each_line(rs = $/) { |line| ... }        -> self
+  # --- each(rs = $/, limit) { |line| ... }      -> self
+  # --- each_line(rs = $/, limit) { |line| ... } -> self
+  # --- each(rs = $/)                            -> Enumerator
+  # --- each_line(rs = $/)                       -> Enumerator
+  # --- each(rs = $/, limit)                     -> Enumerator
+  # --- each_line(rs = $/, limit)                -> Enumerator
+  # 
+  # ARGFの現在位置から 1 行ずつ文字列として読み込み、それを引数として与えら
+  # れたブロックを実行します。
+  # 
+  # ブロックが与えられなかった場合は、[[c:Enumerator]] オブジェクトを生成し
+  # て返します。
+  # 
+  # このメソッドはスクリプトに指定した引数([[m:Object::ARGV]] を参照) をファ
+  # イル名とみなして、それらのファイルを連結した 1 つの仮想ファイルを表すオ
+  # ブジェクトです。そのため、最初のファイルを最後まで読んだ後は次のファイ
+  # ルの内容を返します。現在の行についてファイル名や行数を得るには
+  # [[m:ARGF.class#filename]] と [[m:ARGF.class#lineno]] を使用します。
+  # 
+  # @param rs 行の区切りを文字列で指定します。nil を指定すると行区切りなし
+  #           とみなします。空文字列 "" を指定すると連続する改行を行の区切
+  #           りとみなします(パラグラフモード)。
+  # 
+  # @param limit 各行の最大の読み込みバイト数
+  # 
+  # 例: ARGFの各ファイル名(最初に1回のみ)、行番号、内容を表示
+  # 
+  #   ARGF.each_line do |line|
+  #     puts ARGF.filename if ARGF.lineno == 1
+  #     puts "#{ARGF.lineno}: #{line}"
+  #   end
+  # 
+  # @see [[m:IO#each]], [[m:IO#each_line]]
+  def each; end
+
+  # --- each_byte { |byte| ...} -> self
+  # --- each_byte               -> Enumerator
+  # 
+  # ARGF の現在位置から 1 バイトずつ読み込み、それを整数として与え、ブロックを実行します。
+  # ブロック引数byteは0..255のいずれかの整数です。
+  # 
+  # このメソッドはスクリプトに指定した引数([[m:Object::ARGV]] を参照) をファ
+  # イル名とみなして、それらのファイルを連結した 1 つの仮想ファイルを表すオ
+  # ブジェクトです。そのため、最初のファイルを最後まで読んだ後は次のファイ
+  # ルの内容を返します。現在位置の1バイトについてファイル名を得るには
+  # [[m:ARGF.class#filename]] を使用します。
+  # 
+  # ブロックが与えられなかった場合は、[[c:Enumerator]] オブジェクトを生成して返します。
+  # 
+  # 例:
+  # 
+  #   ARGF.each_byte.to_a  # => [35, 32, ... 95, 10]
+  # 
+  # @see [[m:IO#each_byte]]
+  def each_byte; end
+
+  # --- each_char { |c| ... } -> self
+  # --- each_char             -> Enumerator
+  # 
+  # レシーバに含まれる文字を一文字ずつブロックに渡して評価します。
+  # 
+  # このメソッドはスクリプトに指定した引数([[m:Object::ARGV]] を参照) をファ
+  # イル名とみなして、それらのファイルを連結した 1 つの仮想ファイルを表すオ
+  # ブジェクトです。そのため、最初のファイルを最後まで読んだ後は次のファイ
+  # ルの内容を返します。現在位置の1文字についてファイル名を得るには
+  # [[m:ARGF.class#filename]] を使用します。
+  # 
+  # ブロックが与えられなかった場合は、[[c:Enumerator]] オブジェクトを生成し
+  # て返します。
+  # 
+  # 例:
+  #   # $ echo "line1\n" > test1.txt
+  #   # $ echo "line2\n" > test2.txt
+  #   # $ ruby test.rb test1.txt test2.txt
+  # 
+  #   # test.rb
+  #   ARGF.each_char          # => #<Enumerator: ARGF:each_char>
+  #   ARGF.each_char{|e|p e}
+  # 
+  #   # => "l"
+  #   #    "i"
+  #   #    "n"
+  #   #    "e"
+  #   #    "1"
+  #   #    "\n"
+  #   #    "l"
+  #   #    "i"
+  #   #    "n"
+  #   #    "e"
+  #   #    "2"
+  #   #    "\n"
+  # 
+  # @see [[m:IO#each_char]], [[m:IO#chars]]
+  def each_char; end
+
+  # --- each_codepoint { |c| ... }   -> self
+  # --- each_codepoint               -> Enumerator
+  # 
+  # self の各コードポイントに対して繰り返しブロックを呼びだします。
+  # 
+  # ブロックの引数にはコードポイントを表す整数が渡されます。
+  # 
+  # ブロックを省略した場合には、[[c:Enumerator]] を返します。
+  # 
+  # 例:
+  #   # $ echo "line1\n" > test1.txt
+  #   # $ echo "line2\n" > test2.txt
+  #   # $ ruby test.rb test1.txt test2.txt
+  # 
+  #   # test.rb
+  #   ARGF.each_codepoint                  # => #<Enumerator: ARGF:each_codepoint>
+  #   ARGF.each_codepoint{|e|print e, ","} # => 108,105,110,101,49,10,108,105,110,101,50,10,
+  def each_codepoint; end
+
+  # --- eof  -> bool
+  # --- eof? -> bool
+  # 
+  # 現在開いているファイルがEOFに達したらtrueを返します。そうでない場合は
+  # falseを返します。
+  # 
+  # @raise IOError ファイルがopenされていない場合に発生します。
+  # 
+  #   $ echo "eof" | ruby argf.rb
+  # 
+  #   ARGF.eof?                 # => false
+  #   3.times { ARGF.readchar }
+  #   ARGF.eof?                 # => false
+  #   ARGF.readchar             # => "\n"
+  #   ARGF.eof?                 # => true
+  # 
+  # @see [[m:IO#eof]], [[m:IO#eof?]]
+  def eof; end
+
+  # --- external_encoding -> Encoding
+  # 
+  # ARGF が処理するファイルに対する外部エンコーディングを返します。
+  # デフォルトは [[m:Encoding.default_external]] です。
+  # 
+  # [[m:ARGF.class#set_encoding]] で設定します。
+  # 
+  # 例:
+  # 
+  #   ARGF.external_encoding  # =>  #<Encoding:UTF-8>
+  # 
+  # @see [[c:IO]], [[m:ARGF.class#internal_encoding]]
+  def external_encoding; end
+
+  # --- file -> IO
+  # 
+  # 現在開いている処理対象の [[c:File]] オブジェクト(または [[c:IO]] オブジェ
+  # クト)を返します。
+  # 
+  #   $ echo "foo" > foo
+  #   $ echo "bar" > bar
+  # 
+  #   $ ruby argf.rb foo bar
+  # 
+  #   ARGF.file      # => #<File:foo>
+  #   ARGF.read(5)   # => "foo\nb"
+  #   ARGF.file      # => #<File:bar>
+  # 
+  # ARGFが現在開いている処理対象が標準入力の場合、$stdin を返します。
+  def file; end
+
+  # --- filename -> String
+  # --- path -> String
+  # 
+  # 現在開いている処理対象のファイル名を返します。
+  # 
+  # 標準入力に対しては - を返します。
+  # 組み込み変数 [[m:$FILENAME]] と同じです。
+  # 
+  #   $ echo "foo" > foo
+  #   $ echo "bar" > bar
+  #   $ echo "glark" > glark
+  # 
+  #   $ ruby argf.rb foo bar glark
+  # 
+  #   ARGF.filename # => "foo"
+  #   ARGF.read(5)  # => "foo\nb"
+  #   ARGF.filename # => "bar"
+  #   ARGF.skip
+  #   ARGF.filename # => "glark"
+  def filename; end
+
+  # --- fileno -> Integer
+  # --- to_i   -> Integer
+  # 
+  # 現在オープンしているファイルのファイル記述子を表す整数を返します。
+  # 
+  #   ARGF.fileno    # => 3
+  # 
+  # @raise ArgumentError 現在開いているファイルがない場合に発生します。
+  def fileno; end
+
+  # --- getbyte   -> Integer | nil
+  # 
+  # self から 1 バイト(0..255)を読み込み整数として返します。
+  # 既に EOF に達していれば nil を返します。
+  # 
+  # ARGF はスクリプトに指定した引数([[m:Object::ARGV]] を参照) をファイル名
+  # とみなして、それらのファイルを連結した 1 つの仮想ファイルを表すオブジェ
+  # クトです。そのため、最初のファイルを最後まで読んだ後は次のファイルの内
+  # 容を返します。
+  # 
+  #   $ echo "foo" > file1
+  #   $ echo "bar" > file2
+  #   $ ruby argf.rb file1 file2
+  # 
+  #   ARGF.getbyte # => 102
+  #   ARGF.getbyte # => 111
+  #   ARGF.getbyte # => 111
+  #   ARGF.getbyte # => 10
+  #   ARGF.getbyte # => 98
+  #   ARGF.getbyte # => 97
+  #   ARGF.getbyte # => 114
+  #   ARGF.getbyte # => 10
+  #   ARGF.getbyte # => nil
+  # 
+  # @see [[m:ARGF.class#getc]], [[m:ARGF.class#gets]]
+  def getbyte; end
+
+  # --- getc -> String | nil
+  # 
+  # self から 1 文字読み込んで返します。EOF に到達した時には nil を返します。
+  # 
+  # ARGF はスクリプトに指定した引数([[m:Object::ARGV]] を参照) をファイル名
+  # とみなして、それらのファイルを連結した 1 つの仮想ファイルを表すオブジェ
+  # クトです。そのため、最初のファイルを最後まで読んだ後は次のファイルの内
+  # 容を返します。
+  # 
+  #   $ echo "foo" > file1
+  #   $ echo "bar" > file2
+  #   $ ruby argf.rb file1 file2
+  # 
+  #   ARGF.getc # => "f"
+  #   ARGF.getc # => "o"
+  #   ARGF.getc # => "o"
+  #   ARGF.getc # => "\n"
+  #   ARGF.getc # => "b"
+  #   ARGF.getc # => "a"
+  #   ARGF.getc # => "r"
+  #   ARGF.getc # => "\n"
+  #   ARGF.getc # => nil
+  # 
+  # @see [[m:ARGF.class#getbyte]], [[m:ARGF.class#gets]]
+  def getc; end
+
+  # --- gets(rs = $/, chomp: false)   -> String | nil
+  # --- gets(limit, chomp: false)     -> String | nil
+  # --- gets(rs, limit, chomp: false) -> String | nil
+  # 
+  # ARGFの現在位置から一行ずつ文字列として読み込みます。EOF に到達した時に
+  # は nil を返します。
+  # 
+  # @param rs 行の区切りを文字列で指定します。rs に nil を指定すると行区切
+  #           りなしとみなします。空文字列 "" を指定すると連続する改行を行
+  #           の区切りとみなします(パラグラフモード)。
+  # 
+  # @param limit 最大の読み込みバイト数
+  # 
+  # @param chomp true を指定すると各行の末尾から "\n", "\r", または "\r\n" を取り除きます。
+  # 
+  # 例:
+  #   # $ echo "line1\nline2\nline3\n\nline4\n" > test.txt
+  #   # $ ruby test.rb test.txt
+  # 
+  #   # test.rb
+  #   ARGF.gets                  # => "line1\n"
+  # 
+  # 例:
+  #   # $ echo "line1\nline2\nline3\n\nline4\n" > test.txt
+  #   # $ ruby test.rb test.txt
+  # 
+  #   # test.rb
+  #   ARGF.gets(2)                  # => "li"
+  # 
+  # 例:
+  #   # $ echo "line1\nline2\nline3\n\nline4\n" > test.txt
+  #   # $ ruby test.rb test.txt
+  # 
+  #   # test.rb
+  #   ARGF.gets("e")                  # => "line"
+  # 
+  # 
+  # 例:
+  #   # $ echo "line1\nline2\nline3\n\nline4\n" > test.txt
+  #   # $ ruby test.rb test.txt
+  # 
+  #   # test.rb
+  #   ARGF.gets("")                  # => "line1\nline2\nline3\n\n"
+  # 
+  # @see [[m:Kernel.#gets]], [[m:IO#gets]], [[m:ARGF.class#getbyte]], [[m:ARGF.class#getc]]
+  def gets; end
+
+  # --- inplace_mode -> String | nil
+  # 
+  # [[ref:c:ARGF#inplace]] で書き換えるファイルのバックアップに付加される拡
+  # 張子を返します。拡張子が設定されていない場合は空文字列を返します。イン
+  # プレースモードでない場合は nil を返します。
+  # 
+  # Ruby 起動時の -i オプション や [[m:ARGF.class#inplace_mode=]] で設定します。
+  # 
+  # 例:
+  #   # $ echo "test" > test.txt
+  #   # $ ruby -i.bak test.rb test.txt
+  #   # $ cat test.txt # => "TEST"
+  #   # $ cat test.txt.bak # => "test"
+  # 
+  #   # test.rb
+  #   ARGF.inplace_mode                   # => ".bak"
+  #   ARGF.each_line {|e|print e.upcase}  # => "TEST"
+  # 
+  # 例:
+  #   # $ echo "test" > test.txt
+  #   # $ ruby test.rb test.txt
+  #   # $ cat test.txt # => "test"
+  # 
+  #   # test.rb
+  #   ARGF.inplace_mode                   # => nil
+  #   ARGF.each_line {|e|print e.upcase}  # => "TEST"
+  # 
+  # @see [[ref:d:spec/rubycmd#cmd_option]], [[m:ARGF.class#inplace_mode=]]
+  def inplace_mode; end
+
+  # --- inplace_mode=(ext)
+  # 
+  # [[ref:c:ARGF#inplace]]時にバックアップファイルに付加する拡張子を設定します。
+  # ピリオドも含めて指定する必要があります。
+  # 
+  # バックアップを残さない場合は空文字列を指定します。
+  # この機能は Windows では使用出来ません。
+  # 
+  # 設定が有効になるのは次のファイルの処理に移った時です。
+  # インプレースモードに入っていない場合はその時点でモードに入ります。
+  # 
+  # Ruby 起動時の -i オプションで設定することも出来ます。
+  # 
+  # @param ext インプレースモード時にバックアップファイルに付加する拡張子を
+  #            文字列で指定します。
+  #            ピリオドも含める必要があります。
+  # 
+  #   $ ruby argf.rb file.txt
+  # 
+  #   ---- argf.rb ----
+  #   # 引数のファイル中の各行の最初の "foo" を "bar" で置き換える
+  #   ARGF.inplace_mode = '.bak'
+  #   ARGF.lines do |line|
+  #     print line.sub("foo","bar")
+  #   end
+  # 
+  # 
+  #   ---- -i オプションを使う場合 ----
+  #   $ ruby -i.bak -p -e '$_.sub!("foo","bar")' file.txt
+  # 
+  #   ---- -i オプションを使う場合その２ ----
+  #   $ ruby -i.bak -n -e 'print $_.sub("foo","bar")' file.txt
+  # 
+  # @see [[ref:d:spec/rubycmd#cmd_option]], [[m:ARGF.class#inplace_mode]]
+  def inplace_mode=; end
+
+  # --- to_s -> String
+  # --- inspect -> String
+  # 
+  # 常に文字列 "ARGF" を返します。
+  def inspect; end
+
+  # --- internal_encoding -> Encoding | nil
+  # 
+  # ARGF から読み込んだ文字列の内部エンコーディングを返します。
+  # 内部エンコーディングが指定されていない場合は nil を返します。
+  # 
+  # まだ読み込み処理を始めていない場合は [[m:Encoding.default_external]] を返します。
+  # 
+  # [[m:ARGF.class#set_encoding]] で設定します。
+  # 
+  # 
+  # 例:
+  #   # $ ruby -Eutf-8 test.rb
+  # 
+  #   # test.rb
+  #   ARGF.internal_encoding            # => #<Encoding:UTF-8>
+  #   ARGF.set_encoding('utf-8','ascii')
+  #   ARGF.internal_encoding            # => #<Encoding:US-ASCII>
+  # 
+  # 例:
+  #   ARGF.binmode
+  #   ARGF.internal_encoding            # => nil
+  # 
+  # @see [[c:IO]], [[m:ARGF.class#external_encoding]]
+  def internal_encoding; end
+
+  # --- lineno -> Integer
+  # 
+  # 全引数ファイルを一つのファイルとみなしたときの現在の行番号を返します。
+  # 個々の引数ファイル毎の行番号を得るには ARGF.file.lineno とします。
+  # 
+  # この値を書き換えたい場合は [[m:ARGF.class#lineno=]] を使用してください。
+  # 
+  #   ARGF.lineno   # => 0
+  #   ARGF.readline # => "This is line 1\n"
+  #   ARGF.lineno   # => 1
+  # 
+  # @see [[m:ARGF.class#lineno=]]
+  def lineno; end
+
+  # --- lineno=(number)
+  # 
+  # 全引数ファイルを一つのファイルとみなしたときの現在の行番号を number に書き換えます。
+  # 
+  # この値を読み込みたい場合は [[m:ARGF.class#lineno]] を使用してください。
+  # 
+  # @param number 更新後の行番号を指定する
+  # 
+  #   ARGF.lineno      # => 0
+  #   ARGF.readline    # => "This is line 1\n"
+  #   ARGF.lineno      # => 1
+  #   ARGF.lineno = 0  # => 0
+  #   ARGF.lineno      # => 0
+  # 
+  # @see [[m:ARGF.class#lineno]]
+  def lineno=; end
+
+  # --- pos  -> Integer
+  # --- tell -> Integer
+  # 
+  # ARGFが現在開いているファイルのファイルポインタの現在の位置をバイト単位
+  # の整数で返します。
+  # 
+  #   ARGF.pos    # => 0
+  #   ARGF.gets   # => "This is line one\n"
+  #   ARGF.pos    # => 17
+  # 
+  # @see [[m:IO#pos]], [[m:IO#tell]], [[m:ARGF.class#pos=]]
+  def pos; end
+
+  # --- pos=(n)
+  # 
+  # ARGFが開いているファイルのファイルポインタを指定位置に移動します。
+  # 
+  # @param n 先頭からのオフセットをバイト単位の整数で指定します。
+  # 
+  #   ARGF.pos = 17
+  #   ARGF.gets   # => "This is line two\n"
+  # 
+  # @see [[m:IO#pos=]], [[m:ARGF.class#pos]]
+  def pos=; end
+
+  # --- print(*arg)  -> nil
+  # 
+  # 引数を順に処理対象のファイルに出力します。
+  # 
+  # [[ref:c:ARGF#inplace]]時にのみ使用できます。
+  # また [[m:$stdout]] への代入の影響を受けません。
+  # それ以外は [[m:Kernel.#print]] と同じです。
+  # 
+  # @param arg 出力するオブジェクトを任意個指定します。
+  def print; end
+
+  # --- printf(format, *arg)  -> nil
+  # 
+  # C 言語の printf と同じように、format に従い引数を
+  # 文字列に変換して処理対象のファイルに出力します。
+  # 
+  # [[ref:c:ARGF#inplace]]時にのみ使用できます。
+  # また [[m:$stdout]] への代入の影響を受けません。
+  # それ以外は出力先を指定しない形式の [[m:Kernel.#printf]] と同じです。
+  # 
+  # @param format フォーマット文字列です。
+  # @param arg フォーマットされる引数です。
+  def printf; end
+
+  # --- putc(ch)  -> object
+  # 
+  # 文字 ch を処理対象のファイルに出力します。
+  # ch を返します。
+  # 
+  # [[ref:c:ARGF#inplace]]時にのみ使用できます。
+  # また [[m:$stdout]] への代入の影響を受けません。
+  # それ以外は [[m:Kernel.#putc]] と同じです。
+  # 
+  # @param ch 出力する文字を [[c:String]] オブジェクトで指定します。
+  def putc; end
+
+  # --- puts(*arg)  -> nil
+  # 
+  # 引数と改行を順番に処理対象のファイルに出力します。
+  # 引数がなければ改行のみを出力します。
+  # 
+  # [[ref:c:ARGF#inplace]]時にのみ使用できます。
+  # また [[m:$stdout]] への代入の影響を受けません。
+  # それ以外は [[m:Kernel.#puts]] と同じです。
+  # 
+  # @param arg 出力するオブジェクトを任意個指定します。
+  def puts; end
+
+  # --- read(length = nil, str = nil) -> String | nil
+  # 
+  # ARGVに指定されたファイルを先頭のファイルからlengthバイト読み込み、
+  # その文字列をstrに出力します。読み込んだ文字列を返します。
+  # 
+  # @param length 読み込むバイト数を指定します。nilの場合はARGVのすべてのファ
+  #               イルを読み込みます。
+  # 
+  # @param str 出力先の文字列。内容は上書きされます。
+  # 
+  #   $ echo "small" > small.txt
+  #   $ echo "large" > large.txt
+  #   $ ruby glark.rb small.txt large.txt
+  # 
+  #   ARGF.read      # => "small\nlarge"
+  #   ARGF.read(200) # => "small\nlarge"
+  #   ARGF.read(2)   # => "sm"
+  #   ARGF.read(0)   # => ""
+  # 
+  # @see [[m:IO#read]]
+  def read; end
+
+  # --- read_nonblock(maxlen, outbuf = nil, exception: true) -> String | Symbol | nil
+  # 
+  # 処理中のファイルからノンブロッキングモードで最大 maxlen バイト読み込みます。
+  # 詳しくは [[m:IO#read_nonblock]] を参照してください。
+  # 
+  # [[m:ARGF.class#read]] などとは違って複数ファイルを同時に読み込むことはありません。
+  # 
+  # @param maxlen 読み込む長さの上限を整数で指定します。
+  # @param outbuf 読み込んだデータを格納する [[c:String]] オブジェクトを指定します。
+  # @param exception 読み込み時に [[c:Errno::EAGAIN]]、
+  #                  [[c:Errno::EWOULDBLOCK]] が発生する代わりに
+  #                  :wait_readable を返すかどうかを指定します。また、false
+  #                  を指定した場合は既に EOF に達していれば
+  #                  [[c:EOFError]] の代わりに nil を返します。
+  # 
+  # @see [[m:ARGF.class#readpartial]]
+  def read_nonblock; end
+
+  # --- readbyte   -> Integer
+  # 
+  # 自身から 1 バイトを読み込み整数として返します。
+  # 既に EOF に達していれば EOFError が発生します。
+  # 
+  # @raise EOFError 既に EOF に達している場合に発生します。
+  # 
+  #   $ echo "foo" > file
+  #   $ ruby argf.rb file
+  # 
+  #   ARGF.readbyte  # => 102
+  #   ARGF.readbyte  # => 111
+  #   ARGF.readbyte  # => 111
+  #   ARGF.readbyte  # => 10
+  #   ARGF.readbyte  # => end of file reached (EOFError)
+  def readbyte; end
+
+  # --- readchar -> Integer
+  # 
+  # ARGFから 1 文字読み込んで、その文字に対応する Fixnum を返します。EOF に
+  # 到達した時には EOFErrorを発生します。
+  # 
+  # @raise EOFError EOFに達した時発生する
+  # 
+  #   $ echo "foo" > file
+  #   $ ruby argf.rb file
+  # 
+  #   ARGF.readchar  # => "f"
+  #   ARGF.readchar  # => "o"
+  #   ARGF.readchar  # => "o"
+  #   ARGF.readchar  # => "\n"
+  #   ARGF.readchar  # => end of file reached (EOFError)
+  # 
+  # @see [[m:ARGF.class#getc]]
+  def readchar; end
+
+  # --- readline(rs = $/)   -> String
+  # --- readline(limit)     -> String
+  # --- readline(rs, limit) -> String
+  # 
+  # ARGFの現在位置から一行ずつ文字列として読み込みます。EOF に到達した時に
+  # は [[c:EOFError]] を発生します。
+  # 
+  # @param rs 行の区切りを文字列で指定します。rs に nil を指定すると行区切
+  #           りなしとみなします。空文字列 "" を指定すると連続する改行を行
+  #           の区切りとみなします(パラグラフモード)。
+  # 
+  # @param limit 最大の読み込みバイト数
+  # 
+  # @raise EOFError EOFに達したら発生する
+  # 
+  # @see [[m:Kernel.#readline]], [[m:ARGF.class#gets]]
+  def readline; end
+
+  # --- readlines(rs = $/)   -> Array
+  # --- readlines(limit)     -> Array
+  # --- readlines(rs, limit) -> Array
+  # --- to_a(rs = $/)        -> Array
+  # --- to_a(limit)          -> Array
+  # --- to_a(rs, limit)      -> Array
+  # 
+  # ARGFの各行を配列に読み込んで返します。rsがnilの場合は要素に各ファイルを
+  # すべて読み込んだ配列を返します。
+  # 
+  # @param rs 行区切り文字
+  # 
+  # @param limit 最大の読み込みバイト数
+  # 
+  #   lines = ARGF.readlines
+  #   lines[0]                # => "This is line one\n"
+  # 
+  # @see [[m:$/]], [[m:Kernel.#readlines]], [[m:IO#readlines]]
+  def readlines; end
+
+  # --- readpartial(maxlen, outbuf = nil) -> String
+  # 
+  # [[m:IO#readpartial]]を参照。[[m:ARGF.class#read]] などとは違って複数ファ
+  # イルを同時に読み込むことはありません。
+  # 
+  # @param maxlen 読み込む長さの上限を整数で指定します。
+  # @param outbuf 読み込んだデータを格納する [[c:String]] オブジェクトを指定します。
+  # 
+  # @see [[m:IO#readpartial]], [[m:ARGF.class#read_nonblock]]
+  def readpartial; end
+
+  # --- rewind -> 0
+  # 
+  # ARGFが現在開いているファイルのファイルポインタを先頭に戻します。
+  # 
+  #   ARGF.readline   # => "This is line one\n"
+  #   ARGF.rewind     # => 0
+  #   ARGF.lineno     # => 0
+  #   ARGF.readline   # => "This is line one\n"
+  def rewind; end
+
+  # --- seek(offset, whence = IO::SEEK_SET) -> 0
+  # 
+  # ARGFが現在開いているファイルのファイルポインタを whence の位置から
+  # offset だけ移動させます。 offset 位置への移動が成功すれば 0 を返します。
+  # 
+  # @param offset ファイルポインタを移動させるオフセットを整数で指定します。
+  # @param whence [[m:IO#seek]] を参照。
+  # 
+  # @see [[m:IO#seek]]
+  def seek; end
+
+  # --- set_encoding(ext_enc)                        -> self
+  # --- set_encoding(enc_str, options = {})          -> self
+  # --- set_encoding(ext_enc, int_enc, options = {}) -> self
+  # 
+  # ARGF の外部／内部エンコーディングを設定します。
+  # 次以降に処理するファイルにも同じ設定が適用されます。
+  # 
+  # 外部エンコーディングは ARGF を介して読み込むファイルの、
+  # 内部エンコーディングは読み込んだ文字列のエンコーディングです。
+  # 
+  # 詳しくは [[m:IO#set_encoding]] を参照してください。
+  # 
+  # @param enc_str 外部／内部エンコーディングを"A:B" のようにコロンで
+  #                区切って指定します。
+  # @param ext_enc 外部エンコーディングを表す文字列か
+  #                [[c:Encoding]] オブジェクトを指定します。
+  # @param int_enc 内部エンコーディングを表す文字列か
+  #                [[c:Encoding]] オブジェクトを指定します。
+  # @param options エンコーディング変換のオプション。
+  #                [[m:String#encode]] と同じものが指定できます。
+  # 
+  # @see [[m:String#encode]]
+  def set_encoding; end
+
+  # --- skip -> self
+  # 
+  # 現在開いている処理対象のファイルをクローズします。
+  # 次回の読み込みは次の引数が処理対象になります。
+  # self を返します。
+  # 
+  #   $ echo "foo" > foo
+  #   $ echo "bar" > bar
+  # 
+  #   $ ruby argf.rb foo bar
+  #   ARGF.filename  # => "foo"
+  #   ARGF.skip
+  #   ARGF.filename  # => "bar"
+  def skip; end
+
+  # --- to_io -> IO
+  # 
+  # ARGFが現在開いているファイルの[[c:File]]、または[[c:IO]]オブジェクトを
+  # 返します。
+  # 
+  #   ARGF.to_io    # => #<File:glark.txt>
+  #   ARGF.to_io    # => #<IO:<STDIN>>
+  # 
+  # @see [[m:ARGF.class#file]], [[m:ARGF.class#to_write_io]]
+  def to_io; end
+
+  # --- to_write_io  -> IO
+  # 
+  # 処理対象のファイルへの書き出し用 [[c:IO]] オブジェクトを返します。
+  # 
+  # [[ref:c:ARGF#inplace]]時以外は読み込み用の IO オブジェクトを返します。
+  # このため [[m:ARGF.class#write]] などの書き出し用メソッドを呼ぶと [[c:IOError]] が発生します。
+  def to_write_io; end
+
+  # --- write(str)  -> Integer
+  # 
+  # 処理対象のファイルに対して str を出力します。
+  # str が文字列でなければ to_s による文字列化を試みます。
+  # 実際に出力できたバイト数を返します。
+  # 
+  # [[ref:c:ARGF#inplace]]時にのみ使用できます。
+  # 
+  # @param str 出力する文字列を指定します。
+  # 
+  # @see [[m:ARGF.class#to_write_io]]
+  def write; end
+
+end

@@ -1,0 +1,3 @@
+class GetoptLong::NeedlessArgument
+
+end

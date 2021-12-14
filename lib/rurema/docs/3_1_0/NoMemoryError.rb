@@ -1,0 +1,3 @@
+class NoMemoryError
+
+end

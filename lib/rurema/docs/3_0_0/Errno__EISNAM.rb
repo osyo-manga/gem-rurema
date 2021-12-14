@@ -1,0 +1,3 @@
+class Errno::EISNAM
+
+end

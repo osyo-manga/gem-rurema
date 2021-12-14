@@ -1,0 +1,3 @@
+class Rake::TaskArgumentError
+
+end

@@ -1,0 +1,3 @@
+class Zlib::MemError
+
+end

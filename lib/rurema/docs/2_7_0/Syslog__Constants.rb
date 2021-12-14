@@ -1,0 +1,3 @@
+module Syslog::Constants
+
+end

@@ -1,0 +1,3 @@
+class Rinda::RequestCanceledError
+
+end

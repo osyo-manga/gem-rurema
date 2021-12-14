@@ -1,0 +1,3 @@
+class OptionParser::AmbiguousArgument
+
+end

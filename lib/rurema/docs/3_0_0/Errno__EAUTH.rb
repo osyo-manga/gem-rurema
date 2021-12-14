@@ -1,0 +1,3 @@
+class Errno::EAUTH
+
+end

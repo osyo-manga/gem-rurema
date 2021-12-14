@@ -1,0 +1,3 @@
+module Gem::Ext
+
+end

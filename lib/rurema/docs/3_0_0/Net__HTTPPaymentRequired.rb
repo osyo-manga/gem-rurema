@@ -1,0 +1,3 @@
+class Net::HTTPPaymentRequired
+
+end

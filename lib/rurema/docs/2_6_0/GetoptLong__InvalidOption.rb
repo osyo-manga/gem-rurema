@@ -1,0 +1,3 @@
+class GetoptLong::InvalidOption
+
+end

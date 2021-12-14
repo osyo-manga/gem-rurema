@@ -1,0 +1,3 @@
+class Errno::EBADRQC
+
+end

@@ -1,0 +1,3 @@
+module RDoc::Generator
+
+end

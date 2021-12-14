@@ -1,0 +1,3 @@
+class OpenSSL::OpenSSLError
+
+end

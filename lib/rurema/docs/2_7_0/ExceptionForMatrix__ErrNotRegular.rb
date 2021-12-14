@@ -1,0 +1,3 @@
+class ExceptionForMatrix::ErrNotRegular
+
+end

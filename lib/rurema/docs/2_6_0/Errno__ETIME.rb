@@ -1,0 +1,3 @@
+class Errno::ETIME
+
+end

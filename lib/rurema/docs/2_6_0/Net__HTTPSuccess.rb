@@ -1,0 +1,3 @@
+class Net::HTTPSuccess
+
+end

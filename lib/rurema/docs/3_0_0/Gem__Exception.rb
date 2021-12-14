@@ -1,0 +1,3 @@
+class Gem::Exception
+
+end

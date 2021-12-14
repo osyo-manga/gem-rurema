@@ -1,0 +1,3 @@
+class ThreadError
+
+end

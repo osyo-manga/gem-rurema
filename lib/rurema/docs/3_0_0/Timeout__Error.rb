@@ -1,0 +1,3 @@
+class Timeout::Error
+
+end

@@ -1,0 +1,3 @@
+module Digest::Instance
+
+end

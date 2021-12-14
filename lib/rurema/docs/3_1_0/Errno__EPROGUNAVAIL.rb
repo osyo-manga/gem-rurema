@@ -1,0 +1,3 @@
+class Errno::EPROGUNAVAIL
+
+end

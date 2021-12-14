@@ -1,0 +1,3 @@
+class Etc::Passwd
+
+end

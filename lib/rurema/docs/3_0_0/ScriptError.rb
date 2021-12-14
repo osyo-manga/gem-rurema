@@ -1,0 +1,3 @@
+class ScriptError
+
+end

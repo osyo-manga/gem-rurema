@@ -1,0 +1,3 @@
+module RSS::DublinCoreModel
+
+end

@@ -1,0 +1,3 @@
+class Errno::EDEADLK
+
+end

@@ -1,0 +1,3 @@
+module RDoc::TokenStream
+
+end

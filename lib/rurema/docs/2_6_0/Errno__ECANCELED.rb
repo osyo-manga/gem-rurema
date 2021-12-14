@@ -1,0 +1,3 @@
+class Errno::ECANCELED
+
+end

@@ -1,0 +1,3 @@
+class Errno::ENETRESET
+
+end

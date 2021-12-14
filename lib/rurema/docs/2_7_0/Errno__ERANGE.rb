@@ -1,0 +1,3 @@
+class Errno::ERANGE
+
+end

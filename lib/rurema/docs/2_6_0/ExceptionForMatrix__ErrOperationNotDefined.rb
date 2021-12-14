@@ -1,0 +1,3 @@
+class ExceptionForMatrix::ErrOperationNotDefined
+
+end

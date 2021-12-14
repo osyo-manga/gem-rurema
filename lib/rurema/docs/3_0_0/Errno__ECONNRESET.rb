@@ -1,0 +1,3 @@
+class Errno::ECONNRESET
+
+end

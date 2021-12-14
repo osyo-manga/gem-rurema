@@ -1,0 +1,3 @@
+class GetoptLong::MissingArgument
+
+end

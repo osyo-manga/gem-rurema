@@ -1,0 +1,3 @@
+class Net::HTTPPreconditionFailed
+
+end

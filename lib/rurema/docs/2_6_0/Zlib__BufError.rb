@@ -1,0 +1,3 @@
+class Zlib::BufError
+
+end

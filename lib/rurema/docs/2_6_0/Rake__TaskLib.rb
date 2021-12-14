@@ -1,0 +1,3 @@
+class Rake::TaskLib
+
+end

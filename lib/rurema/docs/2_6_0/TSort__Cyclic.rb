@@ -1,0 +1,3 @@
+class TSort::Cyclic
+
+end

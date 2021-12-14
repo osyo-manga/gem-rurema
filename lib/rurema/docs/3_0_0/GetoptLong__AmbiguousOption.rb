@@ -1,0 +1,3 @@
+class GetoptLong::AmbiguousOption
+
+end

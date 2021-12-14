@@ -1,0 +1,3 @@
+class OptionParser::InvalidOption
+
+end

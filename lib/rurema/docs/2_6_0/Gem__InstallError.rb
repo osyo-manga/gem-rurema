@@ -1,0 +1,3 @@
+class Gem::InstallError
+
+end

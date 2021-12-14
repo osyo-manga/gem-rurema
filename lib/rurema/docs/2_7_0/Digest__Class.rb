@@ -1,0 +1,3 @@
+class Digest::Class
+
+end

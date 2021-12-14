@@ -1,0 +1,3 @@
+class Errno::EFBIG
+
+end

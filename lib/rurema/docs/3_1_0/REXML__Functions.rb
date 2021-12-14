@@ -1,0 +1,3 @@
+module REXML::Functions
+
+end

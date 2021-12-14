@@ -1,0 +1,3 @@
+module JSON::Editor
+
+end

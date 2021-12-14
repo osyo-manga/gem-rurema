@@ -1,0 +1,3 @@
+class JSON::UnparserError
+
+end

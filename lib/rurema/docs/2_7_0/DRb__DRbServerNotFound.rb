@@ -1,0 +1,3 @@
+class DRb::DRbServerNotFound
+
+end

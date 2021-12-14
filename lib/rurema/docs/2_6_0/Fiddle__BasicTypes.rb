@@ -1,0 +1,3 @@
+module Fiddle::BasicTypes
+
+end

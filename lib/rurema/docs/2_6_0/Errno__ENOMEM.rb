@@ -1,0 +1,3 @@
+class Errno::ENOMEM
+
+end

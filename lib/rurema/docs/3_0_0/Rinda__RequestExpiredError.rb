@@ -1,0 +1,3 @@
+class Rinda::RequestExpiredError
+
+end

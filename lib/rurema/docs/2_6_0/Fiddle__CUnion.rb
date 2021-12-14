@@ -1,0 +1,3 @@
+class Fiddle::CUnion
+
+end

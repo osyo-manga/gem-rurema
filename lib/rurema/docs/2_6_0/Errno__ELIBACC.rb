@@ -1,0 +1,3 @@
+class Errno::ELIBACC
+
+end

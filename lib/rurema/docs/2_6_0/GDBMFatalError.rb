@@ -1,0 +1,3 @@
+class GDBMFatalError
+
+end

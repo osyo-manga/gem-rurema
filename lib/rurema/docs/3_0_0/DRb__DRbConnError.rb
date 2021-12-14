@@ -1,0 +1,3 @@
+class DRb::DRbConnError
+
+end

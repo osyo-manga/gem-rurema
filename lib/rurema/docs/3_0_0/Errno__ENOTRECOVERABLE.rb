@@ -1,0 +1,3 @@
+class Errno::ENOTRECOVERABLE
+
+end

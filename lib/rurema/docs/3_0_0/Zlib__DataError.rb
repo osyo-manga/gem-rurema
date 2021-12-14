@@ -1,0 +1,3 @@
+class Zlib::DataError
+
+end

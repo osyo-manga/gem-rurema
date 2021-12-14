@@ -1,0 +1,3 @@
+class REXML::UndefinedNamespaceException
+
+end

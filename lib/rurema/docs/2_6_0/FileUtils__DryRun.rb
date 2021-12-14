@@ -1,0 +1,3 @@
+module FileUtils::DryRun
+
+end

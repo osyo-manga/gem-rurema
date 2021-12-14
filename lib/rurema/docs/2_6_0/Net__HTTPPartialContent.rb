@@ -1,0 +1,3 @@
+class Net::HTTPPartialContent
+
+end

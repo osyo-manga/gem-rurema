@@ -1,0 +1,3 @@
+class Errno::EADDRINUSE
+
+end

@@ -1,0 +1,3 @@
+class RDoc::SingleClass
+
+end

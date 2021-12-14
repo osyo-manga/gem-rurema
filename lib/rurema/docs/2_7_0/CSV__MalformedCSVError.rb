@@ -1,0 +1,3 @@
+class CSV::MalformedCSVError
+
+end

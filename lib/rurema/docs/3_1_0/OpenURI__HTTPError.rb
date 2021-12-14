@@ -1,0 +1,3 @@
+class OpenURI::HTTPError
+
+end

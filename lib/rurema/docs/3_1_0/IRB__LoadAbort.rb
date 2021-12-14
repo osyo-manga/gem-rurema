@@ -1,0 +1,3 @@
+class IRB::LoadAbort
+
+end

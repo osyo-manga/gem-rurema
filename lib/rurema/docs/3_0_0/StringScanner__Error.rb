@@ -1,0 +1,3 @@
+class StringScanner::Error
+
+end

@@ -1,0 +1,3 @@
+module RDoc::RubyToken
+
+end

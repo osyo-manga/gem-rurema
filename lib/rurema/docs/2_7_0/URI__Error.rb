@@ -1,0 +1,3 @@
+class URI::Error
+
+end

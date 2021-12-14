@@ -1,0 +1,3 @@
+module DRb::DRbObservable
+
+end

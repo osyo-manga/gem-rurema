@@ -1,0 +1,3 @@
+class Errno::EREMOTEIO
+
+end

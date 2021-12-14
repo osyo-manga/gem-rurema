@@ -1,0 +1,3 @@
+class RDoc::MetaMethod
+
+end

@@ -1,0 +1,3 @@
+class Rake::MultiTask
+
+end

@@ -1,0 +1,3 @@
+class RSS::XMLParserNotFound
+
+end

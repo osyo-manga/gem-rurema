@@ -1,0 +1,3 @@
+class Racc::ParseError
+
+end

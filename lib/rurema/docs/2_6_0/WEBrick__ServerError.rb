@@ -1,0 +1,3 @@
+class WEBrick::ServerError
+
+end

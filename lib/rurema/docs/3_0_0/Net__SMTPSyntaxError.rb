@@ -1,0 +1,3 @@
+class Net::SMTPSyntaxError
+
+end

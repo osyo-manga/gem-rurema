@@ -1,0 +1,3 @@
+class REXML::Output
+
+end

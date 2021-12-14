@@ -1,0 +1,3 @@
+module IRB::IrbLoader
+
+end

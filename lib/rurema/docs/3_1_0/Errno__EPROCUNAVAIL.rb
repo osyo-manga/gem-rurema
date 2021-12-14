@@ -1,0 +1,3 @@
+class Errno::EPROCUNAVAIL
+
+end

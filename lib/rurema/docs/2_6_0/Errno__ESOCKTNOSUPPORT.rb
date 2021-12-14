@@ -1,0 +1,3 @@
+class Errno::ESOCKTNOSUPPORT
+
+end

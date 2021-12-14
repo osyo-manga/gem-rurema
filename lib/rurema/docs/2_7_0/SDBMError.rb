@@ -1,0 +1,3 @@
+class SDBMError
+
+end

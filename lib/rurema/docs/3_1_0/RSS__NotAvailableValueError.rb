@@ -1,0 +1,3 @@
+class RSS::NotAvailableValueError
+
+end

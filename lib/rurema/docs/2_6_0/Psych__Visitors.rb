@@ -1,0 +1,3 @@
+class Psych::Visitors
+
+end

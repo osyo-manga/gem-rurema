@@ -1,0 +1,3 @@
+class Errno::EEXIST
+
+end

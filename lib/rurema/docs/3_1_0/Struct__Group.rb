@@ -1,0 +1,3 @@
+class Etc::Group
+
+end

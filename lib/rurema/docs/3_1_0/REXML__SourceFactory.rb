@@ -1,0 +1,3 @@
+class REXML::SourceFactory
+
+end

@@ -1,0 +1,3 @@
+module Psych::Nodes
+
+end

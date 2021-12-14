@@ -1,0 +1,3 @@
+class Errno::ENOTNAM
+
+end

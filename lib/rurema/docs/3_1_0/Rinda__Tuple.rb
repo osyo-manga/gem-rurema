@@ -1,0 +1,3 @@
+class Rinda::Tuple
+
+end

@@ -1,0 +1,3 @@
+class Exception2MessageMapper::ErrNotRegisteredException
+
+end
