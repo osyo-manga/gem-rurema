@@ -22,7 +22,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### install bitclust
+
+```shell
+$ gem install refe2
+$ bitclust setup --versions=2.6.0,2.7.0,3.0.0,3.1.0
+```
 
 ## Development
 
